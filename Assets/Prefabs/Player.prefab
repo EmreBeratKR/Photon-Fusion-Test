@@ -108,7 +108,19 @@ MonoBehaviour:
     m_ActionId: 3c9a7641-0bf8-42e1-aceb-c858caebd2c8
     m_ActionName: Player/Move[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 577513279994460040}
+        m_TargetAssemblyTypeName: Client_Side.PlayerInputHandler, Assembly-CSharp
+        m_MethodName: OnLook
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 3debecbb-d79d-4b26-83bf-0398440049fb
     m_ActionName: Player/Look[/Mouse/delta,/Pen/delta]
   - m_PersistentCalls:
@@ -327,6 +339,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
+  networkPlayer: {fileID: 577513280673392415}
   movementPhysic: {fileID: 13400000, guid: 599e3606372664cda85fa15b64fe12e0, type: 2}
   colliders:
   - {fileID: 577513280013111786}
@@ -336,6 +349,7 @@ MonoBehaviour:
   deaccelerationRate: 0.1
   speed: 10
   terminalSpeed: 20
+  mouseSensivity: 1
   callbacks:
     onJump:
       m_PersistentCalls:

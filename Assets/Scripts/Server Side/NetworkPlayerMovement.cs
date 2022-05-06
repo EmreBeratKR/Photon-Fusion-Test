@@ -10,6 +10,9 @@ namespace Server_Side
     {
         private static float BaseGravityForce = 9.81f;
         
+        [Header("References")]
+        [SerializeField] private NetworkPlayer networkPlayer;
+        
         [Header("Physic")]
         [SerializeField] private PhysicMaterial movementPhysic;
         [SerializeField] private Collider[] colliders;
@@ -22,11 +25,13 @@ namespace Server_Side
         [SerializeField] private float deaccelerationRate;
         [SerializeField] private float speed;
         [SerializeField] private float terminalSpeed;
+        [SerializeField] private float mouseSensivity;
 
         [Space(10)]
         [SerializeField] private Callbacks callbacks;
 
         private NetworkPlayerInput input;
+        private float pitch;
         
 
         private Vector3 DesiredVelocity
@@ -140,6 +145,17 @@ namespace Server_Side
             body.AddForce(Vector3.down * BaseGravityForce * gravityScale, ForceMode.Acceleration);
         }
 
+        private void LookAround()
+        {
+            body.transform.Rotate(Vector3.up * input.LookInput.x * mouseSensivity);
+
+            pitch -= input.LookInput.y * mouseSensivity;
+
+            pitch = Mathf.Clamp(pitch, -90f, 90f);
+            
+            networkPlayer.TiltFppCamera(pitch);
+        }
+
 
         public override void FixedUpdateNetwork()
         {
@@ -150,6 +166,8 @@ namespace Server_Side
             TryJump();
             
             ApplyGravity();
+
+            LookAround();
         }
     }
 

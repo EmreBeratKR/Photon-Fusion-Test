@@ -7,6 +7,8 @@ namespace Client_Side
 {
     public class PlayerInputHandler : MonoBehaviour
     {
+        private Vector2 look;
+        
         private bool isForward;
         private bool isBack;
         private bool isRight;
@@ -30,7 +32,7 @@ namespace Client_Side
 
                 if (isJump) inputs |= InputFlag.Jump;
 
-                return new NetworkPlayerInput(inputs);
+                return new NetworkPlayerInput(inputs, look);
             }
         }
 
@@ -53,6 +55,12 @@ namespace Client_Side
         public void ReleaseJump()
         {
             isJump = false;
+        }
+
+        public void OnLook(InputAction.CallbackContext context)
+        {
+            var rawInput = context.ReadValue<Vector2>();
+            look = rawInput;
         }
     }
 }
