@@ -1,4 +1,5 @@
 using System;
+using Client_Side;
 using Fusion;
 using UnityEngine;
 using UnityEngine.Events;
@@ -12,6 +13,7 @@ namespace Server_Side
         
         [Header("References")]
         [SerializeField] private NetworkPlayer networkPlayer;
+        [SerializeField] private PlayerFppCameraController fppCameraController;
         
         [Header("Physic")]
         [SerializeField] private PhysicMaterial movementPhysic;
@@ -25,14 +27,12 @@ namespace Server_Side
         [SerializeField] private float deaccelerationRate;
         [SerializeField] private float speed;
         [SerializeField] private float terminalSpeed;
-        [SerializeField] private float mouseSensivity;
 
         [Space(10)]
         [SerializeField] private Callbacks callbacks;
 
         private NetworkPlayerInput input;
-        private float pitch;
-        
+
 
         private Vector3 DesiredVelocity
         {
@@ -78,7 +78,7 @@ namespace Server_Side
             body = this.GetComponent<Rigidbody>();
             body.useGravity = false;
         }
-
+        
 
         private void CacheInput()
         {
@@ -98,8 +98,8 @@ namespace Server_Side
         private void Move()
         {
             TogglePhysicMaterial(true);
-            
-            var localDesiredVelocity = (transform.rotation * DesiredVelocity);
+            var cameraRotation = Quaternion.Euler(Vector3.up  * fppCameraController.Angle);
+            var localDesiredVelocity = (cameraRotation * DesiredVelocity);
 
             var velocityChange = (localDesiredVelocity - body.velocity) * accelerationRate;
             velocityChange.y = 0;
@@ -145,17 +145,6 @@ namespace Server_Side
             body.AddForce(Vector3.down * BaseGravityForce * gravityScale, ForceMode.Acceleration);
         }
 
-        private void LookAround()
-        {
-            body.transform.Rotate(Vector3.up * input.LookInput.x * mouseSensivity);
-
-            pitch -= input.LookInput.y * mouseSensivity;
-
-            pitch = Mathf.Clamp(pitch, -90f, 90f);
-            
-            networkPlayer.TiltFppCamera(pitch);
-        }
-
 
         public override void FixedUpdateNetwork()
         {
@@ -166,8 +155,6 @@ namespace Server_Side
             TryJump();
             
             ApplyGravity();
-
-            LookAround();
         }
     }
 

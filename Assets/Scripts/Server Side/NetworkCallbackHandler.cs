@@ -34,7 +34,7 @@ namespace Server_Side
                 return; 
             }
 
-            input.Set(localPlayer.Inputs);
+            input.Set(localPlayer.Buttons);
         }
 
         public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input)

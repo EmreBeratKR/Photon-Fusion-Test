@@ -20,16 +20,12 @@ namespace Server_Side
         private InputFlag inputs;
         public InputFlag Inputs => this.inputs;
 
-        private Vector2 lookInput;
-        public Vector2 LookInput => this.lookInput;
-
 
         public bool HasInput => inputs != 0;
         
-        public NetworkPlayerInput(InputFlag inputs, Vector2 lookInput)
+        public NetworkPlayerInput(InputFlag inputs)
         {
             this.inputs = inputs;
-            this.lookInput = lookInput;
         }
 
         public bool Check(InputFlag input)

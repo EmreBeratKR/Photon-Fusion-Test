@@ -11,7 +11,9 @@ namespace Server_Side
 
 
         [SerializeField] private PlayerInputHandler inputHandler;
-        public NetworkPlayerInput Inputs => inputHandler.Inputs;
+        public NetworkPlayerInput Buttons => inputHandler.Buttons;
+
+        public bool HasInputAuthority => this.Object.HasInputAuthority;
 
 
         private void Start()
@@ -26,7 +28,7 @@ namespace Server_Side
 
         private void SetFppCamera()
         {
-            if (!Object.HasInputAuthority) return;
+            if (!HasInputAuthority) return;
             
             PlayerFppCamera.SetTarget(fppCameraTarget);
         }

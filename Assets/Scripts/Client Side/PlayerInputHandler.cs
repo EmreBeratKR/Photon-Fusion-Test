@@ -7,7 +7,7 @@ namespace Client_Side
 {
     public class PlayerInputHandler : MonoBehaviour
     {
-        private Vector2 look;
+        private Vector2 mouseDelta;
         
         private bool isForward;
         private bool isBack;
@@ -16,7 +16,7 @@ namespace Client_Side
 
         private bool isJump;
         
-        public NetworkPlayerInput Inputs
+        public NetworkPlayerInput Buttons
         {
             get
             {
@@ -32,9 +32,11 @@ namespace Client_Side
 
                 if (isJump) inputs |= InputFlag.Jump;
 
-                return new NetworkPlayerInput(inputs, look);
+                return new NetworkPlayerInput(inputs);
             }
         }
+
+        public Vector2 MouseDelta => mouseDelta;
 
         
         public void OnMove(InputAction.CallbackContext context)
@@ -60,7 +62,7 @@ namespace Client_Side
         public void OnLook(InputAction.CallbackContext context)
         {
             var rawInput = context.ReadValue<Vector2>();
-            look = rawInput;
+            mouseDelta = rawInput;
         }
     }
 }
