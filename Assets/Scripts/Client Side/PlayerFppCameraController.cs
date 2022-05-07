@@ -43,7 +43,7 @@ namespace Client_Side
         }
 
         [Rpc(RpcSources.All, RpcTargets.All)]
-        public void RpcSyncBodyRotation(uint objectId, float newPitch, float newAngle)
+        private void RpcSyncBodyRotation(uint objectId, float newPitch, float newAngle)
         {
             if (this.networkPlayer.HasInputAuthority) return;
             

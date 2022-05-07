@@ -15,6 +15,7 @@ namespace Client_Side
         private bool isLeft;
 
         private bool isJump;
+        private bool isSprint;
         
         public NetworkPlayerInput Buttons
         {
@@ -31,6 +32,8 @@ namespace Client_Side
                 if (isLeft) inputs |= InputFlag.Left;
 
                 if (isJump) inputs |= InputFlag.Jump;
+
+                if (isSprint) inputs |= InputFlag.Sprint;
 
                 return new NetworkPlayerInput(inputs);
             }
@@ -57,6 +60,11 @@ namespace Client_Side
         public void ReleaseJump()
         {
             isJump = false;
+        }
+
+        public void OnSprint(InputAction.CallbackContext context)
+        {
+            isSprint = context.action.IsPressed();
         }
 
         public void OnLook(InputAction.CallbackContext context)

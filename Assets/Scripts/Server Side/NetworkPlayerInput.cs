@@ -12,7 +12,8 @@ namespace Server_Side
         Right = 1 << 2,
         Left = 1 << 3,
         
-        Jump = 1 << 4
+        Jump = 1 << 4,
+        Sprint = 1 << 5
     }
     
     public struct NetworkPlayerInput : INetworkInput

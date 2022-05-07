@@ -3,6 +3,7 @@ using Client_Side;
 using Fusion;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 namespace Server_Side
 {
@@ -25,7 +26,9 @@ namespace Server_Side
         [Header("Speed Values")]
         [SerializeField] private float accelerationRate;
         [SerializeField] private float deaccelerationRate;
-        [SerializeField] private float speed;
+        [FormerlySerializedAs("speed")]
+        [SerializeField] private float normalSpeed;
+        [SerializeField] private float sprintSpeed;
         [SerializeField] private float terminalSpeed;
 
         [Space(10)]
@@ -63,6 +66,8 @@ namespace Server_Side
                     }
                 }
 
+                var speed = input.Check(InputFlag.Sprint) ? sprintSpeed : normalSpeed;
+                
                 return result.normalized * speed;
             }
         }
